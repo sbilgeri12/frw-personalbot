@@ -268,12 +268,22 @@ class Personal(commands.Cog):
 
 TOKEN = os.getenv("TOKEN")
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
+
+bot = commands.Bot(
+    command_prefix="!",
+    intents=intents,
+    application_id=1534199436945920132
+)
+
+@bot.event
+async def on_ready():
+    print(f"Bot ist online als {bot.user}")
+    await bot.tree.sync()
 
 async def main():
     async with bot:
         await bot.add_cog(Personal(bot))
-        await bot.tree.sync()
         await bot.start(TOKEN)
 
 asyncio.run(main())
+
